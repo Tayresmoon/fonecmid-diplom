@@ -124,16 +124,6 @@
       <name>Отбор.Владелец</name>
       <field>Document.РеализацияТоваровУслуг.Attribute.Контрагент</field>
     </choiceParameterLinks>
-    <choiceParameterLinks>
-      <name>Отбор.Организация</name>
-      <field>Document.РеализацияТоваровУслуг.Attribute.Организация</field>
-    </choiceParameterLinks>
-    <choiceParameters>
-      <name>Отбор.ВидДоговора</name>
-      <value xsi:type="core:ReferenceValue">
-        <value>Enum.ВидыДоговоровКонтрагентов.EnumValue.Покупатель</value>
-      </value>
-    </choiceParameters>
     <fillFromFillingValue>true</fillFromFillingValue>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
@@ -170,7 +160,6 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fillChecking>ShowError</fillChecking>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
@@ -410,4 +399,11 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
   </tabularSections>
+  <templates uuid="b3317acf-54a8-478d-adfb-007660e6f746">
+    <name>ПФ_MXL_ВКМ_АктВыполненияРабот</name>
+    <synonym>
+      <key>ru</key>
+      <value>Акт выполнения работ</value>
+    </synonym>
+  </templates>
 </mdclass:Document>
