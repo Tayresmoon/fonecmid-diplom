@@ -16,4 +16,5 @@
   <content>Catalog.ВКМ_УведомленияТелеграмБоту</content>
   <content>Catalog.ДоговорыКонтрагентов</content>
   <content>Catalog.Контрагенты</content>
+  <content>Document.ВКМ_НачисленияЗарплаты</content>
 </mdclass:Subsystem>
