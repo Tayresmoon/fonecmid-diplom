@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>НаборДанных1</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Сотрудник</dataPath>
+			<field>Сотрудник</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДнейОтгуляно</dataPath>
+			<field>ДнейОтгуляно</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дней отгуляно</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДнейОтпускаЗапланировано</dataPath>
+			<field>ДнейОтпускаЗапланировано</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дней отпуска запланировано</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ
+	ВКМ_ПланированиеОтпусков.Сотрудник КАК Сотрудник,
+	ВКМ_ПланированиеОтпусков.Год КАК Год,
+	СУММА(ВКМ_ПланированиеОтпусков.ВсегоДней) КАК ВсегоДней
+ПОМЕСТИТЬ ВТ_ПланОтпусков
+ИЗ
+	РегистрНакопления.ВКМ_ПланированиеОтпусков КАК ВКМ_ПланированиеОтпусков
+ГДЕ
+	НАЧАЛОПЕРИОДА(ВКМ_ПланированиеОтпусков.Год, ГОД) = НАЧАЛОПЕРИОДА(&amp;Год, ГОД)
+
+СГРУППИРОВАТЬ ПО
+	ВКМ_ПланированиеОтпусков.Сотрудник,
+	ВКМ_ПланированиеОтпусков.Год
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ВКМ_ОсновныеНачисленияДанныеГрафика.Сотрудник КАК Сотрудник,
+	СУММА(ВКМ_ОсновныеНачисленияДанныеГрафика.ЧасовОтработано / 8) КАК ДнейОтработано
+ПОМЕСТИТЬ ВТ_ВремяОтпуска
+ИЗ
+	РегистрРасчета.ВКМ_ОсновныеНачисления.ДанныеГрафика(
+			ВидРасчета = &amp;Отпуск
+				И НАЧАЛОПЕРИОДА(ПериодДействия, ГОД) В
+					(ВЫБРАТЬ
+						НАЧАЛОПЕРИОДА(ВТ_ПланОтпусков.Год, ГОД) КАК НачалоГода
+					ИЗ
+						ВТ_ПланОтпусков КАК ВТ_ПланОтпусков)) КАК ВКМ_ОсновныеНачисленияДанныеГрафика
+
+СГРУППИРОВАТЬ ПО
+	ВКМ_ОсновныеНачисленияДанныеГрафика.Сотрудник
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ВТ_ПланОтпусков.Сотрудник КАК Сотрудник,
+	ВТ_ПланОтпусков.ВсегоДней КАК ДнейОтпускаЗапланировано,
+	ВТ_ВремяОтпуска.ДнейОтработано КАК ДнейОтгуляно
+ИЗ
+	ВТ_ПланОтпусков КАК ВТ_ПланОтпусков
+		ЛЕВОЕ СОЕДИНЕНИЕ ВТ_ВремяОтпуска КАК ВТ_ВремяОтпуска
+		ПО ВТ_ПланОтпусков.Сотрудник = ВТ_ВремяОтпуска.Сотрудник</query>
+	</dataSet>
+	<totalField>
+		<dataPath>ДнейОтгуляно</dataPath>
+		<expression>Сумма(ДнейОтгуляно)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ДнейОтпускаЗапланировано</dataPath>
+		<expression>Сумма(ДнейОтпускаЗапланировано)</expression>
+	</totalField>
+	<parameter>
+		<name>Год</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Год</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>false</useRestriction>
+		<availableAsField>false</availableAsField>
+		<inputParameters>
+			<dcscor:item>
+				<dcscor:parameter>ФорматРедактирования</dcscor:parameter>
+				<dcscor:value xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>ДФ=yyyy</v8:content>
+					</v8:item>
+				</dcscor:value>
+			</dcscor:item>
+		</inputParameters>
+	</parameter>
+	<parameter>
+		<name>Отпуск</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Отпуск</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:ChartOfCalculationTypesRef.ВКМ_ОсновныеНачисления</v8:Type>
+		</valueType>
+		<value xsi:type="dcscor:DesignTimeValue">ПланВидовРасчета.ВКМ_ОсновныеНачисления.Отпуск</value>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Сотрудник</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ДнейОтпускаЗапланировано</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ДнейОтгуляно</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Год</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardBeginningDate">
+						<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfThisYear</v8:variant>
+					</dcscor:value>
+					<dcsset:userSettingID>85ca0171-e4c8-40c0-9eed-f7e61aa691c6</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

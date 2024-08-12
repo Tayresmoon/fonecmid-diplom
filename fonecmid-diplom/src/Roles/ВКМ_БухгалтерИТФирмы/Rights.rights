@@ -1348,13 +1348,6 @@
 		</right>
 	</object>
 	<object>
-		<name>DataProcessor.ВКМ_МассовоеСозданиеАктов.TabularSection.СозданныеАкты</name>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
-		</right>
-	</object>
-	<object>
 		<name>Document.РеализацияТоваровУслуг.TabularSection.Товары.Attribute.Сумма</name>
 		<right>
 			<name>View</name>
@@ -1374,6 +1367,17 @@
 		<right>
 			<name>Edit</name>
 			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>Report.ВКМ_АнализВыставленныхАктов</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
 		</right>
 	</object>
 	<object>
@@ -8515,13 +8519,6 @@
 		</right>
 	</object>
 	<object>
-		<name>DataProcessor.ВКМ_МассовоеСозданиеАктов.Attribute.Период</name>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
-		</right>
-	</object>
-	<object>
 		<name>InformationRegister.УдалитьЗамерыВремени3.Attribute.ДатаЗаписиЛокальная</name>
 		<right>
 			<name>View</name>
@@ -8648,13 +8645,6 @@
 			<name>View</name>
 			<value>false</value>
 		</right>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
-		</right>
-	</object>
-	<object>
-		<name>DataProcessor.ВКМ_МассовоеСозданиеАктов.TabularSection.СозданныеАкты.Attribute.Реализация</name>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -16880,6 +16870,13 @@
 		</right>
 	</object>
 	<object>
+		<name>Subsystem.ВКМ_Отчеты</name>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.ДоговорыКонтрагентовПрисоединенныеФайлы.TabularSection.УдалитьЭлектронныеПодписи.Attribute.ПодписьВерна</name>
 		<right>
 			<name>View</name>
@@ -24992,13 +24989,6 @@
 			<name>View</name>
 			<value>false</value>
 		</right>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
-		</right>
-	</object>
-	<object>
-		<name>DataProcessor.ВКМ_МассовоеСозданиеАктов.TabularSection.СозданныеАкты.Attribute.Договор</name>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
